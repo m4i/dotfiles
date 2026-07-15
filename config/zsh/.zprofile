@@ -25,8 +25,8 @@ if [[ "$TERM_PROGRAM" = vscode ]] && [[ -o interactive ]] && [[ -z "$ZELLIJ" ]] 
 
   # https://github.com/zellij-org/zellij/issues/3213 が fix されたら削除する
   if [[ $OSTYPE =~ ^darwin ]]; then
-    if [[ ${#session_name} -gt 36 ]]; then
-      session_name=${session_name: -36}
+    if [[ ${#session_name} -gt 24 ]]; then
+      session_name=${session_name: -24}
     fi
   fi
 
