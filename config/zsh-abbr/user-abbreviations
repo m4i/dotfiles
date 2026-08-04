@@ -1,6 +1,7 @@
 abbr "gd"="git diff"
 abbr "gds"="git diff --staged"
 abbr "gg"="git grep"
+abbr "gl"="git log --all --graph --oneline"
 abbr "gs"="git status"
 abbr "hist"="history -t \"%F %T\" -D"
 abbr "l"="eza"
