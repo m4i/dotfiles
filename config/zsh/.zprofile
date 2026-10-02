@@ -20,7 +20,7 @@ typeset -U path
 ### Zellij
 
 # VSCode の Terminal 起動時に zellij を起動する
-if [[ "$TERM_PROGRAM" = vscode ]] && [[ -o interactive ]] && [[ -z "$ZELLIJ" ]] && command -v zellij &>/dev/null; then
+if [[ "$TERM_PROGRAM" = vscode || "$TERM_PROGRAM" = zed ]] && [[ -o interactive ]] && [[ -z "$ZELLIJ" ]] && command -v zellij &>/dev/null; then
   session_name=$(pwd | sed -e "s@^$HOME/@HOME/@" -e s@^/@@ -e 's/[^-0-9A-Za-z]/_/g' -e 's/__*/_/g')
 
   # https://github.com/zellij-org/zellij/issues/3213 が fix されたら削除する
