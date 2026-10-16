@@ -2,58 +2,54 @@
 set -euo pipefail
 
 function run() {
-  echo "+ $@"
+  echo "+ $*"
   "$@"
 }
-
-function relpath() {
-  dst="$1"
-  src="$2"
-  if command -v python3 &>/dev/null; then
-    # Linux, macOS
-    python3 -c "import os.path, sys; print(os.path.relpath(sys.argv[1], start=sys.argv[2]))" "$dst" "$src"
-  else
-    # python3 のない devcontainer
-    realpath --relative-to="$src" "$dst"
-  fi
-}
-
-function ln_rel() {
-  dst="$1"
-  src="$2"
-  run ln -snf "$(relpath "$dst" "$src")" "$src"
-}
-
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 
-### ~/.config
+### Homebrew
 
-ln_rel dotfiles/.zshenv ~
+if [[ "$(uname -s)" == Darwin ]]; then
+  if [[ ! -x /opt/homebrew/bin/brew ]]; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  eval "$(/opt/homebrew/bin/brew shellenv bash)"
+fi
 
-run mkdir -p ~/.config
-for file in config/*; do
-  # config/git は後で処理するのでスキップ
-  if [[ "$file" == config/git ]]; then continue; fi
-  ln_rel $file ~/.config
-done
+
+### mise
+
+if ! command -v mise &>/dev/null && [[ ! -x ~/.local/bin/mise ]]; then
+  curl -fsSL https://mise.run | sh
+fi
+export PATH="$HOME/.local/bin:$PATH"
+run mise trust
+run mise bootstrap --skip repos
 
 
 ### git
 
-# ~/.config/git/config は書き込まれる(credential helper 等)のでディレクトリごと
-# symlink せず、git が既定パスで読む attributes/ignore だけ symlink する
 run mkdir -p ~/.config/git
-ln_rel config/git/attributes ~/.config/git
-ln_rel config/git/ignore ~/.config/git
 
+# credential helper 等が書き込むので、Git の config は通常のファイルにする。
+# 既存ファイルは保持し、初回のみ ~/dotfiles の設定を相対パスで include する。
 if [[ ! -f ~/.config/git/config ]]; then
   cat > ~/.config/git/config <<'__EOF__'
 [include]
 	path = ../../dotfiles/config/git/config
 __EOF__
 fi
+
+# github/gitignore の OS・エディタ用テンプレートを結合する。
+{
+  for template in macOS Windows Vim mise; do
+    echo "### https://github.com/github/gitignore/blob/main/Global/$template.gitignore"
+    curl -fsSL "https://raw.githubusercontent.com/github/gitignore/main/Global/$template.gitignore"
+    echo
+  done
+} > ~/.config/git/ignore
 
 
 ### aqua
@@ -95,7 +91,4 @@ run aqua install --all
 
 ### private
 
-if [[ ! -d config-private ]]; then
-  run git clone https://github.com/m4i/config-private.git
-fi
 config-private/install.sh
