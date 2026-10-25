@@ -14,5 +14,10 @@ if OS.mac?
     cask "codex"
     cask "google-drive"
     cask "obsidian"
+  else
+    cask "box-tools"
+    cask "claude"
+    cask "claude-code"
+    cask "intune-company-portal"
   end
 end
