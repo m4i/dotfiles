@@ -1,10 +1,3 @@
-### PATH
-
-path=(~/bin(N-/) $path)
-typeset -U path # 重複削除
-
-
-
 ### history
 
 mkdir -p "$XDG_STATE_HOME/zsh"

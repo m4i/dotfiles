@@ -1,5 +1,6 @@
 if OS.mac?
-  brew "openssl@3" # for sheldon@aqua
+  brew "eza"
+  brew "sheldon"
 
   cask "1password"
   cask "google-chrome"
@@ -10,7 +11,8 @@ if OS.mac?
 
   if ENV["USER"] == "m4i"
     cask "choosy"
-    cask "obsidian"
+    cask "codex"
     cask "google-drive"
+    cask "obsidian"
   end
 end

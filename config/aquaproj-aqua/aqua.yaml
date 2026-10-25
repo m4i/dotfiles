@@ -13,10 +13,8 @@ registries:
 packages:
 - name: BurntSushi/ripgrep@15.2.0
 - name: cli/cli@v2.103.2
-- name: eza-community/eza@0.23.5
 - name: junegunn/fzf@v0.74.5
 - name: ogulcancelik/herdr@v0.9.5
-- name: rossmacarthur/sheldon@0.8.5
 - name: sharkdp/bat@v0.26.1
 - name: starship/starship@v1.27.0
 - name: zellij-org/zellij@v0.45.1

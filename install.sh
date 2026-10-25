@@ -55,8 +55,8 @@ fi
 PATH=~/.local/share/aquaproj-aqua/bin:$PATH
 
 export AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua.yaml
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua-macos.yaml:$AQUA_GLOBAL_CONFIG
+if [[ "$(uname -s)" == "Linux" ]]; then
+  AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua-linux.yaml:$AQUA_GLOBAL_CONFIG
 fi
 
 if [[ ! -d ~/.local/share/aquaproj-aqua ]]; then
