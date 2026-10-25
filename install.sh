@@ -16,6 +16,7 @@ if [[ "$(uname -s)" == Darwin ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   eval "$(/opt/homebrew/bin/brew shellenv bash)"
+  run brew bundle install --no-upgrade
 fi
 
 
@@ -36,10 +37,7 @@ run mkdir -p ~/.config/git
 # credential helper 等が書き込むので、Git の config は通常のファイルにする。
 # 既存ファイルは保持し、初回のみ ~/dotfiles の設定を相対パスで include する。
 if [[ ! -f ~/.config/git/config ]]; then
-  cat > ~/.config/git/config <<'__EOF__'
-[include]
-	path = ../../dotfiles/config/git/config
-__EOF__
+  run cp config/git/config-template ~/.config/git/config
 fi
 
 # github/gitignore の OS・エディタ用テンプレートを結合する。
@@ -54,32 +52,11 @@ fi
 
 ### aqua
 
-PATH=~/.local/share/aquaproj-aqua/bin:~/.cargo/bin:$PATH
-export AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua.yaml
-AQUA_MACOS_CONFIG=~/.config/aquaproj-aqua/aqua-macos.yaml
-AQUA_LINUX_CONFIG=~/.config/aquaproj-aqua/aqua-linux.yaml
+PATH=~/.local/share/aquaproj-aqua/bin:$PATH
 
-# aqua は macOS では cargo が必要
+export AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua.yaml
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  if [[ ! -e ~/.cargo/bin/cargo ]]; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path
-  fi
-  # aqua でインストールするバイナリが Homebrew を前提としているものは動かないので cargo install する
-  sed -En 's! *- +name: +[^/]+/([^@]+)@([^ ]+) *$!\1 \2!p' "$AQUA_LINUX_CONFIG" |
-    while read -r crate version; do
-      case "$crate" in
-        sheldon)
-          options=(--features vendored-openssl)
-          ;;
-        *)
-          options=()
-          ;;
-      esac
-      run cargo install "$crate" --version "$version" --locked "${options[@]}"
-    done
-  AQUA_GLOBAL_CONFIG=$AQUA_MACOS_CONFIG:$AQUA_GLOBAL_CONFIG
-else
-  AQUA_GLOBAL_CONFIG=$AQUA_LINUX_CONFIG:$AQUA_GLOBAL_CONFIG
+  AQUA_GLOBAL_CONFIG=~/.config/aquaproj-aqua/aqua-macos.yaml:$AQUA_GLOBAL_CONFIG
 fi
 
 if [[ ! -d ~/.local/share/aquaproj-aqua ]]; then
@@ -91,4 +68,4 @@ run aqua install --all
 
 ### private
 
-config-private/install.sh
+run config-private/install.sh
