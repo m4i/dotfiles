@@ -3,6 +3,7 @@
 [dotfiles]
 "~/.zshenv" = { source = "dotfiles/.zshenv", relative = true }
 "~/.config/aquaproj-aqua" = { source = "config/aquaproj-aqua", relative = true }
+"~/.config/herdr/config.toml" = { source = "config/herdr/config.toml", relative = true }
 "~/.config/sheldon" = { source = "config/sheldon", relative = true }
 "~/.config/starship.toml" = { source = "config/starship.toml", relative = true }
 "~/.config/zellij" = { source = "config/zellij", relative = true }
