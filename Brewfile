@@ -10,6 +10,7 @@ if OS.mac?
   cask "zoom"
 
   if ENV["USER"] == "m4i"
+    cask "chatgpt"
     cask "choosy"
     cask "codex"
     cask "google-drive"
