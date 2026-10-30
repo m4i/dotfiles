@@ -27,7 +27,7 @@ if ! command -v mise &>/dev/null && [[ ! -x ~/.local/bin/mise ]]; then
 fi
 export PATH="$HOME/.local/bin:$PATH"
 run mise trust
-run mise bootstrap --skip repos
+run mise bootstrap --skip-dirty
 
 
 ### git
@@ -64,6 +64,13 @@ if [[ ! -d ~/.local/share/aquaproj-aqua ]]; then
 fi
 
 run aqua install --all
+
+
+### herdr
+
+if ! herdr plugin list --json | grep -q chmarax.herdr-nvim; then
+  run herdr plugin install --yes ChmaraX/herdr-nvim
+fi
 
 
 ### private

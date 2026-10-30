@@ -3,6 +3,7 @@ if OS.mac?
   brew "sheldon"
 
   cask "1password"
+  cask "ghostty"
   cask "google-chrome"
   cask "karabiner-elements"
   cask "slack"

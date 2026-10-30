@@ -4,11 +4,12 @@
 "~/.zshenv" = { source = "dotfiles/.zshenv", relative = true }
 "~/.config/aquaproj-aqua" = { source = "config/aquaproj-aqua", relative = true }
 "~/.config/herdr/config.toml" = { source = "config/herdr/config.toml", relative = true }
+"~/.config/nvim/lua/plugins/herdr.lua" = { source = "config/nvim/lua/plugins/herdr.lua", relative = true }
 "~/.config/sheldon" = { source = "config/sheldon", relative = true }
 "~/.config/starship.toml" = { source = "config/starship.toml", relative = true }
-"~/.config/zellij" = { source = "config/zellij", relative = true }
 "~/.config/zsh" = { source = "config/zsh", relative = true }
 "~/.config/zsh-abbr" = { source = "config/zsh-abbr", relative = true }
 
 [bootstrap.repos]
 "config-private" = { url = "https://github.com/m4i/config-private.git" }
+"~/.config/nvim" = { url = "https://github.com/LazyVim/starter.git" }
