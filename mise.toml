@@ -4,6 +4,7 @@
 "~/.zshenv" = { source = "dotfiles/.zshenv", relative = true }
 "~/.config/aquaproj-aqua" = { source = "config/aquaproj-aqua", relative = true }
 "~/.config/herdr/config.toml" = { source = "config/herdr/config.toml", relative = true }
+"~/.config/nvim/lua/config/options.lua" = { source = "config/nvim/lua/config/options.lua", relative = true }
 "~/.config/nvim/lua/plugins/herdr.lua" = { source = "config/nvim/lua/plugins/herdr.lua", relative = true }
 "~/.config/sheldon" = { source = "config/sheldon", relative = true }
 "~/.config/starship.toml" = { source = "config/starship.toml", relative = true }
@@ -13,3 +14,13 @@
 [bootstrap.repos]
 "config-private" = { url = "https://github.com/m4i/config-private.git" }
 "~/.config/nvim" = { url = "https://github.com/LazyVim/starter.git" }
+
+# LazyVim/starter の options.lua を dotfiles のものに差し替えるため、未変更なら削除しておく
+[bootstrap.hooks.post_repos]
+run = '''
+cd ~/.config/nvim || exit
+f=lua/config/options.lua
+if [ -f "$f" ] && [ ! -L "$f" ] && git diff --quiet -- "$f"; then
+  rm "$f"
+fi
+'''
