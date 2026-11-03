@@ -7,7 +7,6 @@ if OS.mac?
   cask "google-chrome"
   cask "karabiner-elements"
   cask "slack"
-  cask "zed"
   cask "zoom"
 
   if ENV["USER"] == "m4i"
