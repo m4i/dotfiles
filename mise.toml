@@ -3,6 +3,7 @@
 [dotfiles]
 "~/.zshenv" = { source = "dotfiles/.zshenv", relative = true }
 "~/.config/aquaproj-aqua" = { source = "config/aquaproj-aqua", relative = true }
+"~/.config/ghostty/config" = { source = "config/ghostty/config", relative = true }
 "~/.config/herdr/config.toml" = { source = "config/herdr/config.toml", relative = true }
 "~/.config/nvim/lua/config/options.lua" = { source = "config/nvim/lua/config/options.lua", relative = true }
 "~/.config/nvim/lua/plugins/herdr.lua" = { source = "config/nvim/lua/plugins/herdr.lua", relative = true }
